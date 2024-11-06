@@ -95,6 +95,7 @@ export PATH=$PATH:~/.tmuxifier/bin
 eval "$(tmuxifier init -)"
 
 alias vifm="vifm ."
+alias ls="eza --icons -a"
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
