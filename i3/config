@@ -46,9 +46,6 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-# start windows in fullscreen by default to save screen space
-for_window [all] fullscreen enable
-
 # start a terminal
 bindsym $mod+Return exec kitty
 
@@ -112,6 +109,9 @@ bindsym $mod+space focus mode_toggle
 
 # focus the parent container
 bindsym $mod+a focus parent
+
+for_window [class=".*"] title_format " "
+for_window [class="^.*"] border pixel 0
 
 # focus the child container
 #bindsym $mod+d focus child
@@ -187,49 +187,25 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-# Rose Pine Theme
-# set primary Rosé Pine colorscheme colors
-set $base           #191724
-set $surface        #1f1d2e
-set $overlay        #26233a
-set $muted          #6e6a86
-set $subtle         #908caa
-set $text           #e0def4
-set $love           #eb6f92
-set $gold           #f6c177
-set $rose           #ebbcba
-set $pine           #31748f
-set $foam           #9ccfd8
-set $iris           #c4a7e7
-set $highlightlow   #21202e
-set $highlightmed   #403d52
-set $highlighthigh  #524f67
+# set primary gruvbox colorscheme colors
+set $bg #282828
+set $red #cc241d
+set $green #98971a
+set $yellow #d79921
+set $blue #458588
+set $purple #b16286
+set $aqua #689d68
+set $gray #a89984
+set $darkgray #1d2021
+set $lightgray #bdae93
 
-# Teming border and Windows --------------
-# target                 title     bg    text   indicator  border
-client.focused           $love     $base $text  $love      $love
-client.focused_inactive  $text     $base $text  $surface    $surface
-client.unfocused         $text     $base $text  $overlay   $overlay
-client.urgent            $text     $base $text  $love      $love
-client.placeholder       $base     $base $text  $overlay   $overlay
-client.background        $base
+# class                 border|backgr|text|indicator|child_border
+client.focused          $lightgray $lightgray $bg $purple $darkgray
+client.focused_inactive $darkgray $darkgray $lightgray $purple $darkgray
+client.unfocused        $darkgray $darkgray $lightgray $purple $darkgray
+client.urgent           $red $red $white $red $red
 
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
-bar {
-  colors {
-    background #000000
-    statusline #FFFFFF
-    separator  #666666
-
-    focused_workspace  #83CAFA #51A2DA #FFFFFF
-    active_workspace   #3C6EB4 #294172 #FFFFFF
-    inactive_workspace #8C8C8C #4C4C4C #888888
-    urgent_workspace   #EC69A0 #DB3279 #FFFFFF
-    binding_mode       #b691d3 #A07CBC #FFFFFF
-  }
-  status_command i3status
-} exec --no-startup-id nitrogen --restore
-
-exec --no-startup-id picom --config ~/config/picom/picom.conf -b
+exec --no-startup-id nitrogen --restore
+exec_always --no-startup-id picom --config ~/dotfiles/picom/picom.conf -fb
 exec --no-startup-id ibus start &
+exec_always --no-startup-id ~/.config/polybar/launch.sh 
